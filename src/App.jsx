@@ -4,12 +4,13 @@ import { store } from './redux/store'
 import { BrowserRouter, Routes, Route, Outlet, Navigate } from 'react-router'
 import Loginpage from './pages/Loginpage'
 import Homepage from './pages/Homepage'
-import { setUser } from './redux/slices/auth-slice'
+import { finishLoading, setUser } from './redux/slices/auth-slice'
 import Layout from './Layout'
 import AboutPage from './pages/AboutPage'
 
 const RouteProtection = ({ children }) => {
-  const user = useSelector(store => store.auth.user)
+  const { user, loading } = useSelector(store => store.auth)
+  if (loading) return <div>Loading...</div>
   return user ? children : <Navigate to="/login" />
 }
 
@@ -19,23 +20,28 @@ const PublicRoute = () => {
 }
 const AuthChecker = ({ children }) => {
   const dispatch = useDispatch()
-  const user = useSelector(store => store.auth.user)
+  const { user, loading } = useSelector(store => store.auth)
   useEffect(() => {
     if (!user) {
       fetch("http://localhost:3000/user/profile", {
         credentials: "include",
       })
-        .then((res) => res.json())
-        .then((data) => {
+        .then(res => res.json())
+        .then(data => {
           if (data?.user) {
-            dispatch(setUser(data.user));
+            dispatch(setUser(data.user))
+          } else {
+            dispatch(finishLoading())
           }
         })
-        .catch((err) =>
-          console.error("error occurred in auth checker: ", err)
-        );
+        .catch(() => dispatch(finishLoading()))
+    } else {
+      dispatch(finishLoading())
     }
   }, [user, dispatch]);
+  if (loading) {
+    return <div>Loading...</div> // or spinner
+  }
   return <>{children}</>
 }
 const App = () => {

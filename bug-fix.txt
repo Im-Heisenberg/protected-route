@@ -1,0 +1,31 @@
+BEFORE --> 
+
+
+[Page refresh at /about]
+
+Redux: user = null
+↓
+RouteProtection runs
+→ sees user=null → redirects to /login
+↓
+AuthChecker fetches /user/profile (too late!)
+→ sets user in Redux
+(but you're already on /)
+
+
+AFTER ---> 
+
+[Page refresh at /about]
+
+Redux: user=null, loading=true
+↓
+RouteProtection runs
+→ sees loading=true → shows <Loading...> (no redirect yet)
+↓
+AuthChecker fetches /user/profile
+   • if success → set user + loading=false
+   • if fail → set user=null + loading=false
+↓
+RouteProtection runs again
+   • if user exists → stay on /about
+   • else → redirect to /login
