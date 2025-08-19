@@ -7,11 +7,19 @@ import Homepage from './pages/Homepage'
 import { finishLoading, setUser } from './redux/slices/auth-slice'
 import Layout from './Layout'
 import AboutPage from './pages/AboutPage'
+import AdminDashboard from './pages/AdminDashboard'
 
 
 const PublicRoute = () => {
   const user = useSelector(store => store.auth.user)
   return user ? <Navigate to="/" /> : <Outlet />
+}
+const PrivateRoute = ({ role }) => {
+  const { user, loading } = useSelector(s => s.auth)
+  if (loading) return <div>Loading...</div>
+  if (!user) return <Navigate to="/login" />
+  if (role && user?.role !== role) return <Navigate to="/" />  
+  return <Outlet />
 }
 const AuthChecker = ({ children }) => {
   const dispatch = useDispatch()
@@ -51,6 +59,9 @@ const App = () => {
             <Route path="/" element={<Layout />}>
               <Route index element={<Homepage />} />
               <Route path="/about" element={<AboutPage />} />
+              <Route element={<PrivateRoute role='admin' />}>
+                <Route path='admin' element={<AdminDashboard />} />
+              </Route>
             </Route>
           </Routes>
         </BrowserRouter>
