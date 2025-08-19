@@ -8,11 +8,6 @@ import { finishLoading, setUser } from './redux/slices/auth-slice'
 import Layout from './Layout'
 import AboutPage from './pages/AboutPage'
 
-const RouteProtection = ({ children }) => {
-  const { user, loading } = useSelector(store => store.auth)
-  if (loading) return <div>Loading...</div>
-  return user ? children : <Navigate to="/login" />
-}
 
 const PublicRoute = () => {
   const user = useSelector(store => store.auth.user)
@@ -53,7 +48,7 @@ const App = () => {
             <Route element={<PublicRoute />}>
               <Route path="/login" element={<Loginpage />} />
             </Route>
-            <Route path="/" element={<RouteProtection><Layout /></RouteProtection>}>
+            <Route path="/" element={<Layout />}>
               <Route index element={<Homepage />} />
               <Route path="/about" element={<AboutPage />} />
             </Route>
