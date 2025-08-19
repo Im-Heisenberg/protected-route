@@ -1,12 +1,53 @@
-# React + Vite
+# Vite React Project
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a FE project template using React with Vite for the frontend. It includes basic routing, pages for Home, About, and Login, and Redux for state management.
 
-Currently, two official plugins are available:
+## Features
+- React components and pages (Home, About, Login)
+- Layout with navigation
+- Redux store and slices
+- Vite for fast development and HMR
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Getting Started
 
-## Expanding the ESLint configuration
+### Prerequisites
+- Node.js (v14 or later)
+- npm
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Installation
+1. Clone the repository:
+   ```bash
+   git clone <repo-url>
+   ```
+2. Navigate to the project directory:
+   ```bash
+   cd vite-project
+   ```
+3. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+### Running the App
+1. Start the development server:
+   ```bash
+   npm run dev
+   ```
+2. Open [http://localhost:5173](http://localhost:5173) in your browser.
+
+## Project Structure
+- `src/`: Source files
+  - `pages/`: React page components (Homepage, AboutPage, Loginpage)
+  - `redux/`: Redux store and slices
+  - `Layout.jsx`: Main layout with navigation
+- `public/`: Static assets
+
+## Available Scripts
+- `npm run dev`: Runs the app in development mode
+- `npm run build`: Builds the app for production
+- `npm run lint`: Runs ESLint
+
+## Learn More
+- [Vite Documentation](https://vitejs.dev/)
+- [React Documentation](https://reactjs.org/)
+- [Redux Documentation](https://redux.js.org/)
